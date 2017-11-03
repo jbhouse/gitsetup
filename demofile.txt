@@ -1,3 +1,4 @@
 Git Demo File
 Created by joe moorhouse
 Setting up git on new machine
+and adding uername and email
