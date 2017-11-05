@@ -5,8 +5,17 @@ import java.util.Scanner;
 public class Game {
 	
 	public static void displayGameState(int guesses, String answer, String attemptedGuesses, String correctLetters) {
+		StringBuilder sb = new StringBuilder(attemptedGuesses);
+		for (int i = 0; i < attemptedGuesses.length(); i++) {
+			if (sb.charAt(0)=='-') {
+				sb.deleteCharAt(0);
+				sb.append('-');
+			} else {
+				break;
+			}
+		}
 		System.out.println("the word so far: "+correctLetters);
-		System.out.println("you have already guessed: ["+new StringBuilder(attemptedGuesses).reverse().toString()+"]");
+		System.out.println("you have already guessed: ["+sb.toString()+"]");
 		System.out.println("you have " + guesses + " guesses left");
 	};
 	
@@ -65,11 +74,13 @@ public class Game {
 		return sb.toString();
 	};
 	
-	public static boolean gameIsOver(int guesses, String correctLetters) {
+	public static boolean gameIsOver(int guesses, String correctLetters, String correctGuess) {
 		if (!correctLetters.contains("-")) {
+			System.out.println("the word: "+correctGuess);
 			System.out.println("holy moly, you win");
 			return true;
 		} else if (guesses==1) {
+			System.out.println("the word was: "+correctGuess);
 			System.out.println("na na na na boo boo, you lose");
 			return true;
 		} else {
@@ -117,7 +128,7 @@ public class Game {
 				userGuessString = getUserInput(sc,userGuessString);
 				String lastUserGuess = String.valueOf(userGuessString);
 				correctLetters = updateGameState(lastUserGuess,totalGuesses-i,correctGuess,correctLetters);
-				if (gameIsOver(totalGuesses-i,correctLetters)) {
+				if (gameIsOver(totalGuesses-i,correctLetters,correctGuess)) {
 					break;
 				}
 			}
